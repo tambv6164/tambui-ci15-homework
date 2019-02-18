@@ -86,7 +86,6 @@ public class Vector2D {
 
         this.x = z*cos;
         this.y = z*sin;
-        System.out.println(ra);
     }
 
 }
