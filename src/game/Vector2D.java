@@ -22,37 +22,61 @@ public class Vector2D {
     }
 
     public void set(double x, double y) {
-        // gán x, y mới cho vector đc gọi
+        // gán giá trị mới
+        this.x = x;
+        this.y = y;
     }
 
     public void add(double x, double y) {
         // cộng x, y vào vector đc gọi
+        this.x += x;
+        this.y += y;
     }
 
     public void minus(double x, double y) {
         // trừ x, y vào vector được gọi
+        this.x -= x;
+        this.y -= y;
     }
 
     public void scale(double rate) {
         // nhân rate vào vector được gọi
+        this.x *= rate;
+        this.y *= rate;
     }
 
     public double getLength() {
         // trả về độ dài vector được gọi
-        return 0;
+        double z;
+        z = Math.sqrt(Math.pow(this.x,2) + Math.pow(this.y,2));
+        return z;
     }
 
     public void setLength(double length) {
         // thay đổi độ dài vector bằng độ dài truyền vào, giữ nguyên hướng
+        double z = this.getLength();
+        double rate = length/z;
+        this.x *= rate;
+        this.y *= rate;
+
     }
 
     public double getAngle() {
         // trả vè góc tạo bởi vector và trục x
-        return 0;
+        double z = this.getLength();
+        double angle;
+        angle = Math.toDegrees(Math.asin(this.y/z));
+        return angle;
     }
 
     public void setAngle(double angle){
         // truyền vào 1 góc mới, vetor sẽ quay theo góc mới, giữ nguyên độ dài
+        double z = this.getLength();
+        double sin = Math.sin(angle);
+        double cos = Math.cos(angle);
+
+        this.x = z*cos;
+        this.y = z*sin;
     }
 
 }
