@@ -58,25 +58,35 @@ public class Vector2D {
         double rate = length/z;
         this.x *= rate;
         this.y *= rate;
-
     }
 
     public double getAngle() {
         // trả vè góc tạo bởi vector và trục x
         double z = this.getLength();
         double angle;
-        angle = Math.toDegrees(Math.asin(this.y/z));
+
+        if (x > 0 && y > 0) {
+            angle = Math.toDegrees(Math.asin(this.y / z));
+        } else if (x < 0 && y > 0) {
+            angle = Math.toDegrees(Math.asin(this.y / z)) + 90;
+        } else if (x < 0 && y < 0) {
+            angle = Math.toDegrees(Math.asin(this.y / z)) + 270;
+        } else {
+            angle = Math.toDegrees(Math.asin(this.y / z)) + 360;
+        }
         return angle;
     }
 
     public void setAngle(double angle){
         // truyền vào 1 góc mới, vetor sẽ quay theo góc mới, giữ nguyên độ dài
         double z = this.getLength();
-        double sin = Math.sin(angle);
-        double cos = Math.cos(angle);
+        double ra = Math.toRadians(angle);
+        double sin = Math.sin(ra);
+        double cos = Math.cos(ra);
 
         this.x = z*cos;
         this.y = z*sin;
+        System.out.println(ra);
     }
 
 }

@@ -33,6 +33,7 @@ public class Player {
         fire();
         bullet.run();
     }
+
     public void fire() {
         fireCount += 1;
         if (GameWindow.isFirePress && fireCount > 20) {
