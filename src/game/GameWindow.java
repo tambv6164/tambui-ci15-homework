@@ -10,6 +10,7 @@ public class GameWindow extends JFrame {
     public static boolean isDownPress;
     public static boolean isLeftPress;
     public static boolean isRightPress;
+    public static boolean isFirePress;
 
     public GameWindow() { // nơi triển khai sự kiện, config, ...
         // thêm sự kiện bấm phím
@@ -29,8 +30,11 @@ public class GameWindow extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     isRightPress = true;
                 }
-            }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    isFirePress = true;
+                }
 
+            }
             @Override
             public void keyReleased(KeyEvent e) {
                 // sự kiện nhả phím
@@ -46,6 +50,9 @@ public class GameWindow extends JFrame {
                 }
                 if (e.getKeyCode() == KeyEvent.VK_D) {
                     isRightPress = false;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    isFirePress = false;
                 }
             }
         });
