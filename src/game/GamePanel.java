@@ -1,5 +1,8 @@
 package game;
 
+import game.enemy.Enemy;
+import game.player.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -24,6 +27,7 @@ public class GamePanel extends JPanel {
                 runAll(); // chạy tất cả logic trong game. đưa trỏ chuột vào tên hàm và nhất Alt + Enter để tự động tạo hàm tạo
                 renderAll(); // vẽ tất cả ảnh trong game
                 lastTime = currentTime;
+                System.out.println(GameObject.objects.size());
             }
         }
     }
@@ -46,6 +50,7 @@ public class GamePanel extends JPanel {
                 object.run();
             }
         }
+        System.out.println(GameObject.objects.size());
     }
 
     private void renderAll() { // vẽ hình

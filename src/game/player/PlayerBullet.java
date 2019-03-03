@@ -1,5 +1,7 @@
-package game;
+package game.player;
 
+import game.GameObject;
+import game.Settings;
 import tklibs.SpriteUtils;
 
 import java.awt.image.BufferedImage;
@@ -27,6 +29,19 @@ public class PlayerBullet extends GameObject {
                 break;
             default:
                 this.image = type1Image;
+        }
+    }
+
+    @Override
+    public void run() {
+        super.run();
+        deactiveIfNeed();
+    }
+
+    private void deactiveIfNeed() {
+        if (this.position.y < -30 || this.position.y > Settings.GAME_HEIGHT + 2
+            || this.position.x < -30 || this.position.x > Settings.GAME_WIDTH + 2) {
+            this.deactive();
         }
     }
 }

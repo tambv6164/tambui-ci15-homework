@@ -1,5 +1,9 @@
-package game;
+package game.enemy;
 
+import game.GameObject;
+import game.player.Player;
+import game.Settings;
+import game.Vector2D;
 import tklibs.SpriteUtils;
 
 public class Enemy extends GameObject {
@@ -11,8 +15,6 @@ public class Enemy extends GameObject {
         this.position.set(-50, -50); // nam ngoai man hinh
         this.velocity.set(2,2);
         this.velocity.setAngle(Math.PI / 18);
-        this.velocity.setLength(Settings.ENEMY_SPEED); // tang toc enemy
-        bulletType = 1;
     }
 
     @Override // khong them khong sao vi phan mem co the tu dong hieu
@@ -37,13 +39,23 @@ public class Enemy extends GameObject {
             this.velocity.set(this.velocity.x, -this.velocity.y);
         }
     }
+
     private void fire() {
         fireCount += 1;
-        if(fireCount > 20) {
-            PlayerBullet bullet = new PlayerBullet();
-            bullet.velocity.set(0, 3);
-            bullet.loadImageByType(1);
-            bullet.position.set(this.position.x, this.position.y);
+        if(fireCount > 10) {
+            // 1. Tao ra vien dan
+//            EnemyBullet bullet = new EnemyBullet(); // thay bằng hàm recycle để recycle bullet
+            EnemyBullet bullet = GameObject.recycle(EnemyBullet.class);
+            bullet.position.set(this.position);
+
+            // 2. Tinh toan vector tro tu Enemy den Player
+            Player player = GameObject.find(Player.class);
+            Vector2D enemyToPlayer = player.position.clone();
+            enemyToPlayer.minus(this.position.x, this.position.y);
+            enemyToPlayer.setLength(4);
+
+            // Dat bullet velocity = vector vua tinh toan
+            bullet.velocity.set(enemyToPlayer);
             fireCount = 0;
         }
     }

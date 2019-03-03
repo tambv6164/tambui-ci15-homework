@@ -1,7 +1,11 @@
-package game;
+package game.player;
 
+import game.GameObject;
+import game.GameWindow;
+import game.Settings;
 import tklibs.SpriteUtils;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends GameObject {
@@ -11,7 +15,15 @@ public class Player extends GameObject {
     Random random;
 
     public Player () {
-        this.image = SpriteUtils.loadImage("assets/images/players/straight/0.png");
+        images = new ArrayList<>();
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/0.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/1.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/2.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/3.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/4.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/5.png"));
+        images.add(SpriteUtils.loadImage("assets/images/players/straight/6.png"));
+
         this.position.set(200, 500);
         fireCount = 0;
         bulletType = 1;
@@ -46,7 +58,8 @@ public class Player extends GameObject {
         }
 
         this.velocity.set(vX, vY);
-        this.velocity.setLength(1); // khi nguoi choi di cheo
+        this.velocity.setLength(1);
+        // khi nguoi choi di cheo
         // thi quang duong di duoc dung bang 1, khong phai bang duong cheo
     }
 
@@ -68,20 +81,23 @@ public class Player extends GameObject {
     private void fire() {
         fireCount += 1;
         if (GameWindow.isFirePress && fireCount > 20) {
+            int numberBullet = 1;
+            if (numberBullet == 1) {
 //            // tao ra mot vien dan 1 lan ban
-////            PlayerBullet bullet = new PlayerBullet();
-////            bullet.position.set(position.x, position.y);
-////            bullets.add(bullet);
-
-            // tao ra nhieu vien 1 lan ban
-            int numberBullet = 3;
-            double startAngle = -Math.PI / 4;
-            double offsetAngle = Math.PI / 2 / (numberBullet - 1); // offset > goc giua 2 duong dan
-            for (int i = 0; i < numberBullet; i++) {
-                PlayerBullet bullet = new PlayerBullet();
+                PlayerBullet bullet = GameObject.recycle(PlayerBullet.class);
                 bullet.loadImageByType(bulletType);
-                bullet.position.set(this.position.x, this.position.y);
-                bullet.velocity.setAngle(startAngle - i * offsetAngle);
+                bullet.position.set(position.x, position.y);
+            } else {
+                // tao ra nhieu vien 1 lan ban
+                double startAngle = -Math.PI / 4;
+                double offsetAngle = Math.PI / 2 / (numberBullet - 1); // offset > goc giua 2 duong dan
+                for (int i = 0; i < numberBullet; i++) {
+//                PlayerBullet bullet = new PlayerBullet();
+                    PlayerBullet bullet = GameObject.recycle(PlayerBullet.class); // sử dụng lại bullet có sẵn
+                    bullet.loadImageByType(bulletType);
+                    bullet.position.set(this.position.x, this.position.y);
+                    bullet.velocity.setAngle(startAngle - i * offsetAngle);
+                }
             }
             fireCount = 0;
         }
